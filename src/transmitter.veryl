@@ -47,10 +47,9 @@ module transmitter #(
             data = {1'b1 repeat WORD_WIDTH + 1};
         } else {
             data = case state {
-                State::AssertReadEnable: {1'b1, din, 1'b0},
-                State::ReadWord        : data,
-                State::TransmitBits    : if full_clock_counts ? {1'b0, data[WORD_WIDTH + 1:1]} : data,
-                default                : {1'b1 repeat WORD_WIDTH + 1},
+                State::ReadWord    : {1'b1, din, 1'b0},
+                State::TransmitBits: if full_clock_counts ? {1'b0, data[WORD_WIDTH + 1:1]} : data,
+                default            : {1'b1 repeat WORD_WIDTH + 1},
             };
         }
     }
