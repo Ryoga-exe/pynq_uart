@@ -22,7 +22,7 @@ module top (
   echo_back #(
       .CLOCK_FREQUENCY(100_000_000),
       .BAUD_RATE(115200)
-  ) u_hello (
+  ) u_echo (
       .clk(CLK),
       .rst(RST),
       .rxd(HD_GPIO_2),
