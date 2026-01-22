@@ -10,7 +10,7 @@ module top (
   //-------------------------------------------------------------------------
   reg [1:0] arst_ff;
   always @(posedge ACLK) begin
-    arst_ff <= {arst_ff[0], ~ARESETN};
+    arst_ff <= {arst_ff[0], ~RST_N};
   end
   wire ARST;
   assign ARST = arst_ff[1];
