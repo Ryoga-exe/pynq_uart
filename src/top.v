@@ -26,7 +26,7 @@ module top (
       .clk(CLK),
       .rst(RST),
       .rxd(HD_GPIO_2),
-      .txd(uart_tx),
+      .txd(uart_tx)
   );
 
   assign HD_GPIO_1 = uart_tx;
