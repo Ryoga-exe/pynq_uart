@@ -6,3 +6,10 @@
 
 # Verilator
 obj_dir/
+
+### Vivado
+.Xil
+project
+*.xpr
+*.jou
+*.log
