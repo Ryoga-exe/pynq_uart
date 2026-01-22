@@ -1,0 +1,50 @@
+module echo_back (
+    clk: input  clock,
+    rst: input  reset,
+    rxd: input  logic,
+    txd: output logic,
+) {
+    var received_word   : logic<8>;
+    var full            : logic   ;
+    var we              : logic   ;
+    var word_to_transmit: logic<8>;
+    var empty           : logic   ;
+    var re              : logic   ;
+
+    inst rx: receiver (
+        clk                ,
+        rst                ,
+        din : rxd          ,
+        dout: received_word,
+        full               ,
+        we                 ,
+    );
+
+    var data_count: logic<12>;
+
+    let rst_tmp: reset_sync_high = rst;
+
+    inst u_fifo_cmd: $sv::fifo_8in8out_1024depth (
+        clk                         ,
+        rst       : rst_tmp         ,
+        din       : received_word   ,
+        rd_en     : re              ,
+        wr_en     : we              ,
+        dout      : word_to_transmit,
+        empty     : empty           ,
+        full      : full            ,
+        overflow  : _               ,
+        valid     : _               ,
+        underflow : _               ,
+        data_count: data_count      ,
+    );
+
+    inst tx: transmitter (
+        clk                    ,
+        rst                    ,
+        din  : word_to_transmit,
+        empty                  ,
+        re                     ,
+        dout : txd             ,
+    );
+}
