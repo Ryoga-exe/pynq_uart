@@ -83,7 +83,7 @@ module uart_hello #(
     end
   end
 
-  core_transmitter #(
+  transmitter #(
       .CLOCK_FREQUENCY(CLOCK_FREQUENCY),
       .BAUD_RATE(BAUD_RATE),
       .WORD_WIDTH(8)

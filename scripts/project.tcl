@@ -9,6 +9,11 @@ set scripts_dir   [file dirname [info script]]
 
 create_project $project_name $project_dir -part $part -force
 
+# --- Add RTL Sources -----------------------------------
+add_files -fileset sources_1 [glob target/*.sv]
+add_files -fileset sources_1 target/top.v
+update_compile_order -fileset sources_1
+
 # --- Run Block Design script ---------------------------
 set design_tcl [file join $scripts_dir "design_1.tcl"]
 
