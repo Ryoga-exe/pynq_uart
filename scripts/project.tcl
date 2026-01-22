@@ -14,6 +14,10 @@ add_files -fileset sources_1 [glob target/*.sv]
 add_files -fileset sources_1 target/top.v
 update_compile_order -fileset sources_1
 
+# --- Add FIFO ------------------------------------------
+import_ip src/ip/fifo_8in8out_1024depth.xci
+update_ip_catalog
+
 # --- Run Block Design script ---------------------------
 set design_tcl [file join $scripts_dir "design_1.tcl"]
 
