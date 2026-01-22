@@ -18,7 +18,6 @@ endif
 build:
 	$(VERYL) build
 	$(CP) src/*.v target/
-	$(CP) src/*.sv target/
 
 .PHONY: project
 project:
