@@ -9,11 +9,11 @@ module top (
   // Reset synchronizer (ARESETN is async, internal ARST is sync / active-high)
   //-------------------------------------------------------------------------
   reg [1:0] arst_ff;
-  always @(posedge ACLK) begin
+  always @(posedge CLK) begin
     arst_ff <= {arst_ff[0], ~RST_N};
   end
-  wire ARST;
-  assign ARST = arst_ff[1];
+  wire RST;
+  assign RST = arst_ff[1];
 
   // Simple Echo-back
 
