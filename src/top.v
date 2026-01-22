@@ -5,18 +5,31 @@ module top (
     output wire HD_GPIO_1,  // J5 pin5 (UART0_TxD)
     input wire HD_GPIO_2  // J5 pin7 (UART0_RxD)
 );
-  wire led0;
+  //-------------------------------------------------------------------------
+  // Reset synchronizer (ARESETN is async, internal ARST is sync / active-high)
+  //-------------------------------------------------------------------------
+  reg [1:0] arst_ff;
+  always @(posedge ACLK) begin
+    arst_ff <= {arst_ff[0], ~ARESETN};
+  end
+  wire ARST;
+  assign ARST = arst_ff[1];
 
-  uart_hello #(
+  // Simple Echo-back
+
+  wire uart_tx;
+
+  echo_back #(
       .CLOCK_FREQUENCY(100_000_000),
       .BAUD_RATE(115200)
   ) u_hello (
       .clk(CLK),
-      .rst_n(RST_N),
-      .tx(HD_GPIO_1),
-      .led0(led0)
+      .rst(RST),
+      .rxd(HD_GPIO_2),
+      .txd(uart_tx),
   );
 
-  assign LED[0] = led0;
+  assign HD_GPIO_1 = uart_tx;
+  assign LED[0] = 1'b0;
   assign LED[1] = 1'b0;
 endmodule
