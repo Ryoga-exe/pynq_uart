@@ -1,4 +1,7 @@
-module echo_back (
+module echo_back #(
+    param CLOCK_FREQUENCY: u32 = 100_000_000,
+    param BAUD_RATE      : u32 = 115200     ,
+) (
     clk: input  clock,
     rst: input  reset,
     rxd: input  logic,
